@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\users\\migue\\desktop\\proyectos\\tatpp\\UI\\UI.csproj": {}
+    "C:\\users\\migue\\desktop\\proyectos\\tatpp\\ui\\UI.csproj": {}
   },
   "projects": {
-    "C:\\users\\migue\\desktop\\proyectos\\tatpp\\UI\\UI.csproj": {
+    "C:\\users\\migue\\desktop\\proyectos\\tatpp\\ui\\UI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\users\\migue\\desktop\\proyectos\\tatpp\\UI\\UI.csproj",
+        "projectUniqueName": "C:\\users\\migue\\desktop\\proyectos\\tatpp\\ui\\UI.csproj",
         "projectName": "UI",
-        "projectPath": "C:\\users\\migue\\desktop\\proyectos\\tatpp\\UI\\UI.csproj",
+        "projectPath": "C:\\users\\migue\\desktop\\proyectos\\tatpp\\ui\\UI.csproj",
         "packagesPath": "C:\\Users\\migue\\.nuget\\packages\\",
-        "outputPath": "C:\\users\\migue\\desktop\\proyectos\\tatpp\\UI\\obj\\",
+        "outputPath": "C:\\users\\migue\\desktop\\proyectos\\tatpp\\ui\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\migue\\AppData\\Roaming\\NuGet\\NuGet.Config",

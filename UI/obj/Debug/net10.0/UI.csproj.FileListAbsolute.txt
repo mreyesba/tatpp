@@ -71,3 +71,4 @@ C:\users\migue\desktop\proyectos\tatpp\UI\obj\Debug\net10.0\refint\UI.dll
 C:\users\migue\desktop\proyectos\tatpp\UI\obj\Debug\net10.0\UI.pdb
 C:\users\migue\desktop\proyectos\tatpp\UI\obj\Debug\net10.0\UI.genruntimeconfig.cache
 C:\users\migue\desktop\proyectos\tatpp\UI\obj\Debug\net10.0\ref\UI.dll
+C:\users\migue\desktop\proyectos\tatpp\ui\obj\Debug\net10.0\UI.sourcelink.json
