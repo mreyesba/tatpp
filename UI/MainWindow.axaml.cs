@@ -3,6 +3,8 @@ using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using System.IO;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace UI;
 
@@ -12,6 +14,10 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
+
+    // High-performance P/Invoke
+    [LibraryImport("analysis_engine.dll", StringMarshalling = StringMarshalling.Utf8)]
+    public static partial long analyze_massive_file(string path);
 
     private async void OpenFile_Click(object? sender, RoutedEventArgs e)
     {
@@ -33,13 +39,12 @@ public partial class MainWindow : Window
 
         if (files.Count > 0)
         {
-            await using var stream = await files[0].OpenReadAsync();
-            using var reader = new StreamReader(stream);
-            var content = await reader.ReadToEndAsync();
-    
-            Editor.Document = new AvaloniaEdit.Document.TextDocument(content);
-            Editor.ShowLineNumbers = true; // Show them now
-            Editor.IsVisible = true;       // Make the editor appear
+            string localPath = files[0].Path.LocalPath;
+            
+            // Run in a background thread so the UI doesn't freeze!
+            long result = await Task.Run(() => analyze_massive_file(localPath));
+            
+            System.Console.WriteLine($"Result from Rust: {result}");
         }
     }
 }

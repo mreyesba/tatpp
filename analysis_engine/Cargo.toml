@@ -1,0 +1,16 @@
+[package]
+name = "analysis_engine"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+# "cdylib" stands for C-compatible dynamic library
+crate-type = ["cdylib"]
+
+[dependencies]
+# libc allows Rust to use C-compatible types for the bridge
+libc = "0.2"
+# memmap2 is the industry standard for 10GB+ files
+memmap2 = "0.9"
+# rayon allows you to use all CPU cores for analysis easily
+rayon = "1.8"
