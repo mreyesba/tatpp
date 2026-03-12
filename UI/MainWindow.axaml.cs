@@ -5,8 +5,22 @@ using System.IO;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using System;
 
 namespace UI;
+
+[StructLayout(LayoutKind.Sequential)]
+public struct LineMatch {
+    public ulong StartOffset;
+    public uint Length;
+}
+
+[StructLayout(LayoutKind.Sequential)]
+public struct SearchResult {
+    public IntPtr Matches;  // The pointer to the first LineMatch
+    public UIntPtr Count;   // Using UIntPtr ensures 32/64-bit compatibility
+    public UIntPtr Capacity;
+}
 
 public partial class MainWindow : Window
 {

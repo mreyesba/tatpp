@@ -3,6 +3,20 @@ use std::fs::File;
 use libc::c_char;
 use memmap2::Mmap;
 
+#[repr(C)]
+#[derive(Clone, Copy)]
+pub struct LineMatch {
+    pub start_offset: u64, // 8 bytes: Supports files up to 18 exabytes
+    pub length: u32,       // 4 bytes: Individual lines rarely exceed 4GB
+}
+
+#[repr(C)]
+pub struct SearchResult {
+    pub matches: *mut LineMatch, // Pointer to the start of the array
+    pub count: usize,            // How many matches we found
+    pub capacity: usize,         // Internal size (needed for freeing memory)
+}
+
 #[unsafe(no_mangle)]
 pub extern "C" fn analyze_massive_file(path_ptr: *const c_char) -> i64 {
     if path_ptr.is_null() { return -1; }
