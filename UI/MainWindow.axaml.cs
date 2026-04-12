@@ -9,19 +9,6 @@ using System;
 
 namespace UI;
 
-[StructLayout(LayoutKind.Sequential)]
-public struct LineMatch {
-    public ulong StartOffset;
-    public uint Length;
-}
-
-[StructLayout(LayoutKind.Sequential)]
-public struct SearchResult {
-    public IntPtr Matches;  // The pointer to the first LineMatch
-    public UIntPtr Count;   // Using UIntPtr ensures 32/64-bit compatibility
-    public UIntPtr Capacity;
-}
-
 public partial class MainWindow : Window
 {
     public MainWindow()
@@ -59,6 +46,16 @@ public partial class MainWindow : Window
             long result = await Task.Run(() => analyze_massive_file(localPath));
             
             System.Console.WriteLine($"Result from Rust: {result}");
+
+            await using var stream = await files[0].OpenReadAsync();
+            using var reader = new StreamReader(stream);
+
+            // 4. For now, we read the whole thing (Keep the file small!)
+            string content = await reader.ReadToEndAsync();
+            
+            // 5. Update the UI
+            Editor.Text = content;
+            Editor.IsVisible = true;
         }
     }
 }
