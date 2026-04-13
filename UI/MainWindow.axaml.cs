@@ -1,19 +1,42 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
+using Avalonia.Input;
+using Avalonia.Controls.Primitives;
+using Avalonia.Threading;
 using System.IO;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System;
+using System.Collections.ObjectModel;
 
 namespace UI;
 
+public class FilterItem
+{
+    public string? Pattern { get; set; } 
+    public bool match_case { get; set; } 
+    public bool regex { get; set; }
+    public bool exclude { get; set; }
+
+    public FilterItem(String Pattern, bool match_case, bool regex, bool exclude)
+    {
+        this.Pattern = Pattern;
+        this.match_case = match_case;
+        this.regex = regex;
+        this.exclude = exclude;
+    }
+}
+
 public partial class MainWindow : Window
 {
+    public ObservableCollection<FilterItem> Filters { get; } = new();
+
     public MainWindow()
     {
         InitializeComponent();
+        DataContext = this; // Vital for binding to work
     }
 
     // High-performance P/Invoke
@@ -57,5 +80,15 @@ public partial class MainWindow : Window
             Editor.Text = content;
             Editor.IsVisible = true;
         }
+    }
+
+    private async void ConfirmAddFilter_Click(object? sender, RoutedEventArgs e)
+    {
+        Filters.Add(new FilterItem("hola", false, false, false));
+    }
+
+    private async void DeleteFilter_Click(object? sender, RoutedEventArgs e)
+    {
+        
     }
 }

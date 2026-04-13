@@ -1,4 +1,5 @@
-<Window xmlns="https://github.com/avaloniaui"
+<Window xmlns:local="clr-namespace:UI"
+        xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ae="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
         x:Class="UI.MainWindow"
@@ -6,10 +7,68 @@
         Title="File Viewer">
 
     <DockPanel>
-        <Button DockPanel.Dock="Top"
-                Content="Open File"
-                Margin="5"
-                Click="OpenFile_Click"/>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="5">
+            <Button Content="Open File"
+                    Click="OpenFile_Click"/>
+            
+            <Button Name="AddFilter_Button"
+                    Content="Add Filter">
+                <Button.Flyout>
+                    <Flyout Placement="BottomEdgeAlignedLeft">
+                        <StackPanel Width="250" Spacing="10" Margin="5">
+                            <TextBlock Text="Add New Filter" FontWeight="Bold"/>
+                            
+                            <TextBox Name="FilterPatternInput" Watermark="Search pattern..."/>
+                            
+                            <CheckBox Name="MatchCaseCheck" Content="Match Case"/>
+                            <CheckBox Name="RegexCheck" Content="Use Regex"/>
+                            <CheckBox Name="ExcludeCheck" Content="Exclude Matches (Inverse)"/>
+                            
+                            <Button Content="Add to List" 
+                                    HorizontalAlignment="Right"
+                                    Click="ConfirmAddFilter_Click"/>
+                        </StackPanel>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+        </StackPanel>
+
+        <Border DockPanel.Dock="Bottom" 
+            Height="120" 
+            Background="#F5F5F5" 
+            BorderBrush="Gray" 
+            BorderThickness="0,1,0,0">
+            <DockPanel Margin="5">
+                <TextBlock DockPanel.Dock="Top" Text="Active Filters" FontSize="12" FontWeight="Bold" Margin="0,0,0,5"/>
+                
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl x:DataType="local:MainWindow" ItemsSource="{Binding Filters}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" Margin="5"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="local:FilterItem">
+                                <Border Background="LightBlue" CornerRadius="15" Margin="4" Padding="8,4">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <TextBlock Text="{Binding Pattern}" VerticalAlignment="Center" FontWeight="Medium"/>
+                                        <Button Content="✕" 
+                                                FontSize="10"
+                                                Padding="2"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                Click="DeleteFilter_Click"
+                                                CommandParameter="{Binding}"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </DockPanel>
+        </Border>
 
         <ae:TextEditor Name="Editor"
                        ShowLineNumbers="False" 
